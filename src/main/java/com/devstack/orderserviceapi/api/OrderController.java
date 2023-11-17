@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/orders")
 public class OrderController {
@@ -32,13 +34,10 @@ public class OrderController {
     }
 
     @GetMapping("/get-by-customer-id/{id}")
-    public ResponseEntity<StandardResponseEntity> findOrdersByCustomer(
+    public List<OrderDto> findOrdersByCustomer(
             @PathVariable Long id
     ){
-        return new ResponseEntity<>(
-                new StandardResponseEntity(201,"Orders by customer!", orderService.loadOrdersByCustomer(id)),
-                HttpStatus.CREATED
-        );
+        return orderService.loadOrdersByCustomer(id);
     }
 
 }
