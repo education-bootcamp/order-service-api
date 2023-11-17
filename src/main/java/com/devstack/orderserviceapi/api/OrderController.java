@@ -1,6 +1,7 @@
 package com.devstack.orderserviceapi.api;
 
 import com.devstack.orderserviceapi.dto.OrderDto;
+import com.devstack.orderserviceapi.dto.ResponseOrderDto;
 import com.devstack.orderserviceapi.service.OrderService;
 import com.devstack.orderserviceapi.util.StandardResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class OrderController {
     }
 
     @GetMapping("/get-by-customer-id/{id}")
-    public List<OrderDto> findOrdersByCustomer(
+    public ResponseOrderDto findOrdersByCustomer(
             @PathVariable Long id
     ){
         return orderService.loadOrdersByCustomer(id);

@@ -1,6 +1,7 @@
 package com.devstack.orderserviceapi.service.impl;
 
 import com.devstack.orderserviceapi.dto.OrderDto;
+import com.devstack.orderserviceapi.dto.ResponseOrderDto;
 import com.devstack.orderserviceapi.entity.Order;
 import com.devstack.orderserviceapi.repo.OrderRepo;
 import com.devstack.orderserviceapi.service.OrderService;
@@ -28,13 +29,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDto> loadOrdersByCustomer(Long id) {
+    public ResponseOrderDto loadOrdersByCustomer(Long id) {
         List<Order> orders = orderRepo.getOrdersByCustomer(id);
         List<OrderDto> dtos = new ArrayList<>();
         for (Order o:orders
              ) {
             dtos.add(new OrderDto(o.getOrderId(),o.getCustomerId(),o.getProductId(),o.getCost()));
         }
-        return dtos;
+        return new ResponseOrderDto(dtos);
     }
 }
