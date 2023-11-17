@@ -6,10 +6,7 @@ import com.devstack.orderserviceapi.util.StandardResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/orders")
@@ -30,6 +27,16 @@ public class OrderController {
         orderService.makeOrder(orderDto);
         return new ResponseEntity<>(
                 new StandardResponseEntity(201,"Order saved!",orderDto),
+                HttpStatus.CREATED
+        );
+    }
+
+    @GetMapping("/get-by-customer-id/{id}")
+    public ResponseEntity<StandardResponseEntity> findOrdersByCustomer(
+            @PathVariable Long id
+    ){
+        return new ResponseEntity<>(
+                new StandardResponseEntity(201,"Orders by customer!", orderService.loadOrdersByCustomer(id)),
                 HttpStatus.CREATED
         );
     }

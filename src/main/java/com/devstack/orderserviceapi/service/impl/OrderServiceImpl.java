@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @Transactional
 public class OrderServiceImpl implements OrderService {
@@ -22,5 +25,16 @@ public class OrderServiceImpl implements OrderService {
     public void makeOrder(OrderDto dto) {
         Order order= new Order(dto.getOrderId(), dto.getCustomerId(), dto.getProductId(), dto.getCost());
         orderRepo.save(order);
+    }
+
+    @Override
+    public List<OrderDto> loadOrdersByCustomer(Long id) {
+        List<Order> orders = orderRepo.getOrdersByCustomer(id);
+        List<OrderDto> dtos = new ArrayList<>();
+        for (Order o:orders
+             ) {
+            dtos.add(new OrderDto(o.getOrderId(),o.getCustomerId(),o.getProductId(),o.getCost()));
+        }
+        return dtos;
     }
 }
